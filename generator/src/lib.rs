@@ -90,6 +90,34 @@ fn get_table_data(unicode_data: &'static str) -> TableData {
     }
 }
 
+pub struct Alias {
+    pub code: &'static str,
+    pub alias: &'static str,
+    pub category: &'static str,
+}
+
+pub fn get_aliases(name_aliases: &'static str) -> Vec<Alias> {
+    let mut aliases = Vec::new();
+    for line in name_aliases.split('\n') {
+        if line.is_empty() {
+            continue;
+        }
+        if line.starts_with('#') {
+            continue;
+        }
+        let mut parts = line.splitn(3, ';');
+        let code = parts.next().unwrap();
+        let alias = parts.next().unwrap();
+        let category = parts.next().unwrap();
+        aliases.push(Alias {
+            code,
+            alias,
+            category,
+        });
+    }
+    aliases
+}
+
 fn write_cjk_ideograph_ranges(ctxt: &mut Context, ranges: &[(char, char)]) {
     ctxt.write_debugs("CJK_IDEOGRAPH_RANGES", "(char, char)", ranges)
 }
@@ -406,4 +434,14 @@ pub fn generate(unicode_data: &'static str, path: Option<&Path>, truncate: Optio
     if let Some(path) = path {
         fs::rename(path.with_extension("tmp"), path).unwrap()
     }
+}
+
+pub fn generate_aliases(name_aliases: &'static str, path: &Path) {
+    let mut aliases = phf_codegen::Map::new();
+    for Alias { code, alias, .. } in get_aliases(name_aliases).into_iter() {
+        let formatted = format!("'\\u{{{code}}}'");
+        aliases.entry(alias, &formatted);
+    }
+    let aliases = aliases.build().to_string().replace("(\"", "(b\"");
+    writeln!(BufWriter::new(File::create(path).unwrap()), "{aliases}",).unwrap();
 }
