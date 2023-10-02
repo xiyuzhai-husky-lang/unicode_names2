@@ -1,3 +1,18 @@
+# v1.1.0
+
+*2023-08-13*
+
+Feature:
+
+* Add alias search fallback to character() ([#12](https://github.com/progval/unicode_names2/pull/12))
+  (this adds a dependency on the `ph` crate and is slightly slower when requesting an alias
+  or non-existing character, this might be fixed in a future release by merging the two hash functions)
+
+Internal:
+
+* Avoid unnecessary rebuilds when neither data/ nor generator/ changed
+* Add example executables to get name from character and vice versa ([#25](https://github.com/progval/unicode_names2/pull/15))
+
 # v1.0.0
 
 *2023-08-13*
