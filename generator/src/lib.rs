@@ -39,7 +39,7 @@ fn get_table_data(unicode_data: &'static str) -> TableData {
         Some((c, name))
     }
 
-    let mut iter = unicode_data.split('\n');
+    let mut iter = unicode_data.lines();
 
     let mut codepoint_names = vec![];
     let mut cjk_ideograph_ranges = vec![];
@@ -98,17 +98,14 @@ pub struct Alias {
 
 pub fn get_aliases(name_aliases: &'static str) -> Vec<Alias> {
     let mut aliases = Vec::new();
-    for line in name_aliases.split(['\n', '\r']) {
-        if line.is_empty() {
-            continue;
-        }
-        if line.starts_with('#') {
+    for line in name_aliases.lines() {
+        if line.is_empty() | line.starts_with('#') {
             continue;
         }
         let mut parts = line.splitn(3, ';');
-        let code = parts.next().unwrap();
-        let alias = parts.next().unwrap();
-        let category = parts.next().unwrap();
+        let code = parts.next().expect(line);
+        let alias = parts.next().expect(code);
+        let category = parts.next().expect(alias);
         aliases.push(Alias {
             code,
             alias,
