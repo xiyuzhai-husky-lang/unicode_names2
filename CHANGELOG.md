@@ -1,3 +1,20 @@
+# v1.2.0
+
+*2023-10-14*
+
+Data:
+
+* Update data to Unicode 15.1 ([#32](https://github.com/progval/unicode_names2/pull/32))
+
+Fixes:
+
+* Fix i686 host builds ([#34](https://github.com/progval/unicode_names2/pull/34))
+* Fix support for platforms using CRLF ([#31](https://github.com/progval/unicode_names2/pull/31) and [#33](https://github.com/progval/unicode_names2/pull/33))
+
+Internal:
+
+* Fixes lint issues ([#33](https://github.com/progval/unicode_names2/pull/33))
+
 # v1.1.0
 
 *2023-08-13*
@@ -38,7 +55,7 @@ Internal:
 
 Data:
 
-* Update data for Unicode 15 ([#10](https://github.com/progval/unicode_names2/pull/))
+* Update data for Unicode 15 ([#10](https://github.com/progval/unicode_names2/pull/10))
 
 # v0.5.1
 
