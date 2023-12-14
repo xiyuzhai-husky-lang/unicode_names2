@@ -1,3 +1,11 @@
+# v1.2.1
+
+*2023-12-14*
+
+Internal:
+
+* include required license texts in all published crates ([#35](https://github.com/progval/unicode_names2/pull/35))
+
 # v1.2.0
 
 *2023-10-14*
